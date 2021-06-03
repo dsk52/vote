@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+    nginx:
+        image: nginx:1.20.1-alpine
+        container_name: "vote_nginx"
+        volumes:
+          - ./docker/nginx/conf/app.conf:/etc/nginx/conf.d/app.conf
+        ports:
+          - 80:80
+        depends_on:
+          - app
+        restart: always
+
+    app:
+        container_name: 'vote_app'
+        build:
+            context: .
+            dockerfile: docker/go/Dockerfile
+        volumes:
+            - ./:/go/src
+        ports:
+            - "3000:3000"
+        tty: true
+        command: air
