@@ -6,17 +6,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type HelloDTO struct {
+type helloDTO struct {
 	Message string `json:message`
 }
 
 func Hello(c echo.Context) error {
-	HelloDTO := new(HelloDTO)
-	if err := c.Bind(HelloDTO); err != nil {
+	helloDTO := new(helloDTO)
+	if err := c.Bind(helloDTO); err != nil {
 		return err
 	}
 
-	HelloDTO.Message = "aaa"
+	helloDTO.Message = "aaa"
 
-	return c.JSON(http.StatusOK, HelloDTO)
+	return c.JSON(http.StatusOK, helloDTO)
 }

@@ -26,14 +26,14 @@ type dBConfig struct {
 func NewConfig() *dBConfig {
 	c := new(dBConfig)
 	c.Host = helper.GetEnv("DB_HOST", "127.0.0.1")
-	c.Username = helper.GetEnv("DB_USER_NAME", "mysql")
+	c.Username = helper.GetEnv("DB_USER", "mysql")
 	c.Password = helper.GetEnv("DB_PASSWORD", "mysql")
 	c.DBName = helper.GetEnv("DB_NAME", "mysql")
 	c.Port = helper.GetEnv("DB_PORT", "3306")
 	return c
 }
 
-func NewDD() *DB {
+func NewDB() *DB {
 	c := NewConfig()
 
 	return newDB(&DB{
@@ -46,7 +46,7 @@ func NewDD() *DB {
 }
 
 func newDB(d *DB) *DB {
-	dsn := d.Username + ":" + d.Password + "@tcp(mysql:" + d.Port + ")/" + d.DBName + "?parseTime=true"
+	dsn := d.Username + ":" + d.Password + "@tcp(" + d.Host + ":" + d.Port + ")/" + d.DBName + "?parseTime=true"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err.Error())
@@ -54,4 +54,8 @@ func newDB(d *DB) *DB {
 	d.Connection = db
 
 	return d
+}
+
+func (db *DB) Connect() *gorm.DB {
+	return db.Connection
 }
