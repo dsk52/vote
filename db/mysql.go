@@ -28,7 +28,7 @@ func NewConfig() *dBConfig {
 	c.Host = helper.GetEnv("DB_HOST", "127.0.0.1")
 	c.Username = helper.GetEnv("DB_USER_NAME", "mysql")
 	c.Password = helper.GetEnv("DB_PASSWORD", "mysql")
-	c.DBName = helper.GetEnv("DB_PASSWORD", "mysql")
+	c.DBName = helper.GetEnv("DB_NAME", "mysql")
 	c.Port = helper.GetEnv("DB_PORT", "3306")
 	return c
 }
