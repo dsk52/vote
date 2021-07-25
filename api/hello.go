@@ -16,7 +16,7 @@ func Hello(c echo.Context) error {
 		return err
 	}
 
-	helloDTO.Message = "aaa"
+	helloDTO.Message = "hello, world"
 
 	return c.JSON(http.StatusOK, helloDTO)
 }

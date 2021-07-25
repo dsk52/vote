@@ -26,7 +26,10 @@ func Init() *echo.Echo {
 	}
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 
-	e.GET("/", api.Hello)
+	e.GET("/hello", api.Hello)
+
+	e.GET("/vote", api.VoteList)
+	e.POST("/vote", api.VoteSave)
 
 	return e
 }
