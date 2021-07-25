@@ -10,6 +10,7 @@ services:
           - 80:80
         depends_on:
           - app
+          - db
         restart: always
 
     app:
@@ -23,3 +24,26 @@ services:
             - "3000:3000"
         tty: true
         command: air
+        environment:
+            DB_NAME: "vote"
+            DB_HOST: "db"
+            DB_USER: "root"
+            DB_PASSWORD: "mysql"
+
+    db:
+        container_name: 'vote_db'
+        build:
+            context: .
+            dockerfile: docker/mysql/Dockerfile
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: "mysql"
+            TZ: "Asia/Tokyo"
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+            - vote-db-store:/var/lib/mysql
+
+volumes:
+    vote-db-store:
